@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">AmpersandContact</string>
+    <string name="register">Register</string>
+    <string name="add_photo">Add Photo</string>
+    <string name="add_profile_photo">ADD PROFILE PHOTO</string>
+    <string name="default_fullname">Joan Shay</string>
+    <string name="full_name_label">Full Name</string>
+    <string name="email_label">Email</string>
+    <string name="email_hint">joan.shay@sparrow.com</string>
+    <string name="phone_sample">+233 (244) 245 190</string>
+    <string name="role_default">Director of Marketing</string>
+    <string name="role_text">Role</string>
+    <string name="twitter_label">Twitter</string>
+    <string name="linkedin_label">LinkedIn</string>
+    <string name="linkedIn_default">/joan.shay</string>
+    <string name="linkedIn_hint">joan.shay/</string>
+    <string name="twitter_hint">joansays\@</string>
+    <string name="title_activity_sign_in">SignInActivity</string>
+
+
 </resources>
