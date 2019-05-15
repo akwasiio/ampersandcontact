@@ -375,6 +375,7 @@
             android:textAllCaps="true"
             style="?android:attr/borderlessButtonStyle"
             android:textColor="#ffffff"
+            android:onClick="onRegisterButtonClick"
             android:background="@drawable/btn_rounded"
             android:layout_marginTop="20dp"/>
 

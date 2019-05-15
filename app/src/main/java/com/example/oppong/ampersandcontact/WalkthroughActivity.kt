@@ -12,7 +12,7 @@ class WalkthroughActivity : AppCompatActivity() {
         setContentView(R.layout.activity_walkthrough)
     }
 
-    fun onRegisterButtonClick(view: View){
+    fun registerButtonClick(view: View){
         startActivity(Intent(this, RegisterActivity::class.java))
     }
 
