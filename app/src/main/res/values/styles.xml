@@ -14,6 +14,12 @@
         <item name="android:background">?android:attr/listDivider</item>
     </style>
 
+    <style name="underline">
+        <item name="android:layout_height">3dp</item>
+        <item name="android:layout_width">130dp</item>
+        <item name="android:background">#af4830</item>
+    </style>
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

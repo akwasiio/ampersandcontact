@@ -16,6 +16,10 @@
     <string name="linkedIn_hint">joan.shay/</string>
     <string name="twitter_hint">joansays\@</string>
     <string name="title_activity_sign_in">SignInActivity</string>
+    <string name="signIn">Sign In</string>
+    <string name="password_hint">&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;</string>
+    <string name="forgotPasswordText">Forgot? Reset Password</string>
+    <string name="password">Password</string>
 
 
 </resources>
