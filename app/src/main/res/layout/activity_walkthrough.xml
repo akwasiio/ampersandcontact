@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:id="@+id/rootLayout"
     android:layout_height="match_parent"
-    tools:context=".Walkthrough">
+    tools:context=".WalkthroughActivity">
     
     <LinearLayout
         app:layout_constraintTop_toTopOf="@id/rootLayout"
@@ -29,22 +29,27 @@
         android:paddingRight="8dp"
         android:layout_width="match_parent"
         android:orientation="vertical"
-        android:layout_height="300dp"
+        android:layout_height="270dp"
         android:paddingStart="20dp"
         android:paddingEnd="8dp">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="17sp"
+            android:layout_marginLeft="10dp"
             android:textColor="#4c4d4f"
+            android:letterSpacing=".1"
             android:fontFamily="@font/brownpro"
-            android:text="@string/keep_in_touch_label"/>
+            android:text="@string/keep_in_touch_label"
+            android:layout_marginStart="10dp" />
         
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:textSize="15sp"
+            android:textSize="17sp"
+            android:layout_marginLeft="10dp"
+            android:textColor="#9b9b9b"
             android:text="@string/sign_in_prompt"/>
 
         <LinearLayout
@@ -52,7 +57,7 @@
             android:layout_marginLeft="16dp"
             android:orientation="horizontal"
             android:layout_marginRight="25dp"
-            android:layout_marginTop="150dp"
+            android:layout_marginTop="120dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -71,11 +76,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/signIn"
-                android:layout_marginLeft="120dp"
+                android:layout_marginLeft="135dp"
                 android:textSize="16sp"
+                android:onClick="onSignInButtonClick"
                 android:fontFamily="@font/brownpro"
                 style="?android:attr/borderlessButtonStyle"
-                android:layout_marginStart="125dp" />
+                android:layout_marginStart="135dp" />
         </LinearLayout>
     </LinearLayout>
 
@@ -91,9 +97,9 @@
         app:layout_constraintRight_toRightOf="@id/rootLayout"
         app:layout_constraintTop_toBottomOf="@id/mainContainer"
         style="@style/underline"
-        android:layout_width="70dp"
-        android:layout_marginRight="74dp"
-        android:layout_marginEnd="74dp" />
+        android:layout_width="65dp"
+        android:layout_marginRight="80dp"
+        android:layout_marginEnd="80dp" />
     
 
 
