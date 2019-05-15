@@ -20,6 +20,8 @@
     <string name="password_hint">&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;</string>
     <string name="forgotPasswordText">Forgot? Reset Password</string>
     <string name="password">Password</string>
+    <string name="keep_in_touch_label">KEEP IN TOUCH WITH THE PEOPLE OF AMPERSAND</string>
+    <string name="sign_in_prompt">Sign in or register with your Ampersand email</string>
 
 
 </resources>
