@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/qr_home_root"
-    tools:context=".HomeQRActivity">
+    tools:context=".views.HomeQRActivity">
 
     <LinearLayout
         android:id="@+id/logo_bar"
@@ -47,7 +47,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_width="match_parent"
         android:orientation="vertical"
-        android:layout_height="590dp"
+        android:layout_height="570dp"
         android:paddingLeft="38dp"
         android:paddingRight="28dp"
         android:paddingTop="90dp"
@@ -69,6 +69,7 @@
             android:fontFamily="@font/brownpro"/>
         
         <ImageView
+            android:id="@+id/barcodeView"
             android:layout_marginTop="50dp"
             android:layout_gravity="center"
             android:layout_width="190dp"
@@ -76,14 +77,14 @@
             android:layout_height="180dp" />
 
         <LinearLayout
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:orientation="horizontal">
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/circle_profile_image"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
+                android:layout_width="55dp"
+                android:layout_height="60dp"
                 app:civ_border_width="2dp"
                 android:layout_marginRight="20dp"
                 app:civ_border_color="#FF000000"
@@ -97,18 +98,16 @@
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
                     android:fontFamily="@font/brownpro"
-                    android:id="@+id/userFullName"
-                    android:textColor="#4a4a4a"
-                    android:text="Joan Shay"/>
+                    android:id="@+id/userFullNameTextView"
+                    android:textColor="#4a4a4a" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     android:textSize="18sp"
                     android:fontFamily="@font/brownpro"
                     android:textColor="#9b9b9b"
-                    android:id="@+id/userRole"
-                    android:text="Head of Marketing"/>
+                    android:id="@+id/userRoleTextView" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
@@ -125,25 +124,30 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="16sp"
-        android:layout_marginTop="20dp"
+        android:fontFamily="@font/brownpro"
+        android:layout_marginTop="15dp"
         android:layout_marginLeft="24dp"
         android:textColor="#4c4d4f"
         android:text="Want to add a new connection? "
         android:layout_marginStart="24dp" />
     
     <Button
-        android:padding="2dp"
+        android:padding="5dp"
         android:background="@drawable/btn_scan"
-        android:layout_width="95dp"
-        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/brownpro"
         android:layout_marginRight="20dp"
         app:layout_constraintTop_toBottomOf="@id/divider"
         app:layout_constraintRight_toRightOf="parent"
         android:text="Scan QR"
         android:textAllCaps="false"
         android:textColor="#af4830"
-        android:layout_marginEnd="20dp" />
+        android:layout_marginEnd="20dp"
+        android:paddingRight="30dp"
+        android:paddingLeft="30dp"
+        android:paddingEnd="30dp"
+        android:paddingStart="30dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
