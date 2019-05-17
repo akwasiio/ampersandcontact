@@ -1,4 +1,5 @@
 package com.example.oppong.ampersandcontact.model
 
-class UserAuthResponse {
-}
+import com.google.gson.annotations.SerializedName
+
+class UserAuthResponse (@SerializedName("user")val user: User, @SerializedName("token") val token: String)

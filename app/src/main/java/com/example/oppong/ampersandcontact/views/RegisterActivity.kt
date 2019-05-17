@@ -1,4 +1,4 @@
-package com.example.oppong.ampersandcontact
+package com.example.oppong.ampersandcontact.views
 
 import androidx.appcompat.app.AppCompatActivity
 import android.Manifest
@@ -16,12 +16,15 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Base64
 import androidx.annotation.RequiresApi
 import androidx.core.content.FileProvider
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
+import com.example.oppong.ampersandcontact.HomeQRActivity
+import com.example.oppong.ampersandcontact.R
 import com.example.oppong.ampersandcontact.viewmodels.AuthViewModel
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
@@ -63,16 +66,32 @@ class RegisterActivity : AppCompatActivity() {
             val firstName = fullNameSplit[0]
             val lastName = fullNameSplit[1]
 
-            viewModel.registerUser(
-                firstName = firstName,
-                lastName = lastName,
-                email = emailEditText.text.toString(),
-                phone = phoneEditText.text.toString(),
-                role = roleEditText.text.toString(),
-                twitter = twitterEditText.text.toString(),
-                linkedIn = linkedInEditText.text.toString(),
-                photo = currentPhotoPath
+            val (message, userObject) = viewModel.registerUser(
+                mFirstName = firstName,
+                mLastName = lastName,
+                mEmail = emailEditText.text.toString(),
+                mPassword = passwordEditText.text.toString(),
+                mPhone = phoneEditText.text.toString(),
+                mRole = roleEditText.text.toString(),
+                mTwitter = twitterEditText.text.toString(),
+                mLinkedIn = linkedInEditText.text.toString(),
+                mPhoto = encodeImageFileToBase64(perfectBitmap)
             )
+
+            when (message) {
+                "registration successful" -> {
+                    val intent = Intent(this, HomeQRActivity::class.java)
+                    intent.putExtra("user", userObject)
+                    startActivity(intent)
+                }
+                "network error" -> Toast.makeText(
+                    this,
+                    "Network error. Check your internet connection and try again.",
+                    Toast.LENGTH_LONG
+                ).show()
+                "email exists" -> Toast.makeText(this, "Email already exists. Go to login page.", Toast.LENGTH_LONG).show()
+            }
+
         } else Toast.makeText(this, "Invalid inputs", Toast.LENGTH_LONG).show()
     }
 
@@ -150,6 +169,8 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
+    lateinit var perfectBitmap: Bitmap
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
@@ -157,19 +178,13 @@ class RegisterActivity : AppCompatActivity() {
                 if (data != null) {
                     val contentUri = data.data
                     try {
-                        val bitmap =
+                        perfectBitmap =
                             MediaStore.Images.Media.getBitmap(this.contentResolver, contentUri)
-                        saveImage(bitmap)
-                        profileImageView.setImageBitmap(bitmap)
+                        saveImage(perfectBitmap)
+                        profileImageView.setImageBitmap(perfectBitmap)
                         makeProfileImageVisible()
 
                     } catch (e: IOException) {
-//                        Snackbar.make(
-//                            registerpage,
-//                            "An error occurred when using camera.",
-//                            Snackbar.LENGTH_LONG
-//                        )
-
                     }
                 }
             } else if (requestCode == CAMERA) {
@@ -181,26 +196,9 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     fun setPic() {
-//        val targetWidth = profileImageView.width
-//        val targetHeight = profileImageView.height
-//
-//        val bmOptions = BitmapFactory.Options()
-//        bmOptions.inJustDecodeBounds = true
-//        BitmapFactory.decodeFile(currentPhotoPath, bmOptions)
-//        val photoWidth = bmOptions.outWidth
-//        val photoHeight = bmOptions.outHeight
-//
-//        // Determine how much to scale down the image.
-//        val scaleFactor = Math.min(photoWidth / targetWidth, photoHeight / targetHeight)
-//
-//        // decode the image file into a Bitmap sized to fit the view
-//        bmOptions.inJustDecodeBounds = false
-//        bmOptions.inSampleSize = scaleFactor
-//        bmOptions.inPurgeable = true
 
-//        val bitmap = BitmapFactory.decodeFile(currentPhotoPath, bmOptions)
         val bitmap = BitmapFactory.decodeFile(currentPhotoPath)
-        val perfectBitmap = checkIfRotationIsRequired(bitmap)
+        perfectBitmap = checkIfRotationIsRequired(bitmap)
         profileImageView.setImageBitmap(perfectBitmap)
         makeProfileImageVisible()
     }
@@ -269,6 +267,19 @@ class RegisterActivity : AppCompatActivity() {
             ExifInterface.ORIENTATION_ROTATE_270 -> rotateImage(bitmap, 270f)
             else -> bitmap
         }
+    }
+
+    private fun encodeImageFileToBase64(bitmap: Bitmap?): String {
+        var encodedString = ""
+        val stream = ByteArrayOutputStream()
+
+        if (bitmap != null) {
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 60, stream)
+            val bytes = stream.toByteArray()
+            encodedString = Base64.encodeToString(bytes, Base64.DEFAULT)
+        }
+        return encodedString
+
     }
 
     fun rotateImage(source: Bitmap, angle: Float): Bitmap {
