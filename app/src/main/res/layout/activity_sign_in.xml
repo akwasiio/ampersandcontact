@@ -93,7 +93,7 @@
                 android:background="@android:color/transparent"
                 android:hint="@string/email_hint"
                 android:textCursorDrawable="@android:color/transparent"
-                android:textDirection="rtl" />
+                android:gravity="end" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <View
@@ -133,9 +133,8 @@
                 android:background="@android:color/transparent"
                 android:hint="@string/password_hint"
                 android:inputType="textPassword"
-                android:gravity="right"
-                android:textCursorDrawable="@android:color/transparent"
-                android:textDirection="rtl" />
+                android:gravity="end"
+                android:textCursorDrawable="@android:color/transparent" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
