@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/rootLayout"
-    tools:context=".SignInActivity">
+    tools:context=".views.SignInActivity">
 
-    <android.support.v7.widget.LinearLayoutCompat
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/signInBar"
         android:layout_width="match_parent"
         android:layout_height="70dp"
@@ -35,7 +35,7 @@
             android:text="@string/signIn"
             android:textColor="#ffffff"
             android:textSize="18sp" />
-    </android.support.v7.widget.LinearLayoutCompat>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -53,7 +53,7 @@
             android:contentDescription="Sign In Image" />
     </LinearLayout>
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/loginFieldBox"
         android:layout_width="match_parent"
         android:layout_height="390dp"
@@ -77,7 +77,7 @@
             app:layout_constraintLeft_toLeftOf="@id/loginFieldBox"
             app:layout_constraintTop_toTopOf="@id/loginFieldBox" />
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/loginEmailInputLayout"
             android:layout_width="250dp"
             android:layout_height="25dp"
@@ -86,7 +86,7 @@
             app:layout_constraintTop_toTopOf="@id/loginFieldBox"
             >
 
-            <android.support.design.widget.TextInputEditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/loginEmailEditText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -94,7 +94,7 @@
                 android:hint="@string/email_hint"
                 android:textCursorDrawable="@android:color/transparent"
                 android:textDirection="rtl" />
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <View
             android:id="@+id/loginDiv"
@@ -115,7 +115,7 @@
             app:layout_constraintLeft_toLeftOf="@id/loginFieldBox"
             app:layout_constraintTop_toBottomOf="@id/loginDiv" />
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/loginPasswordInputLayout"
             android:layout_width="250dp"
             android:layout_height="25dp"
@@ -126,7 +126,7 @@
             android:layout_marginBottom="26dp"
             >
 
-            <android.support.design.widget.TextInputEditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/loginPasswordEditText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -136,7 +136,7 @@
                 android:gravity="right"
                 android:textCursorDrawable="@android:color/transparent"
                 android:textDirection="rtl" />
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/loginButton"
@@ -172,7 +172,7 @@
             android:layout_marginStart="70dp" />
 
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

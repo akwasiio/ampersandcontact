@@ -1,7 +1,8 @@
-package com.example.oppong.ampersandcontact
+package com.example.oppong.ampersandcontact.views
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.oppong.ampersandcontact.R
 
 class SignInActivity : AppCompatActivity() {
 
