@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/registerpage"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.LinearLayoutCompat
+    <LinearLayout
         android:id="@+id/registerBar"
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -32,7 +33,7 @@
             android:text="@string/register"
             android:textColor="#ffffff"
             android:textSize="17sp" />
-    </android.support.v7.widget.LinearLayoutCompat>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/photo_box"
@@ -43,18 +44,19 @@
         app:layout_constraintTop_toBottomOf="@id/registerBar">
 
         <ImageButton
-            android:layout_width="45dp"
-            android:layout_height="45dp"
+            android:id="@+id/addProfilePictureBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-
+            android:onClick="showChooserDialog"
             android:layout_marginStart="1dp"
             android:layout_marginLeft="1dp"
             android:layout_marginTop="55dp"
             android:background="@android:color/transparent"
             android:contentDescription="@string/add_photo"
             android:src="@drawable/ic_user" />
-
         <TextView
+            android:id="@+id/profilePhotoLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -62,9 +64,37 @@
             android:layout_marginLeft="1dp"
             android:layout_marginTop="10dp"
             android:text="@string/add_profile_photo" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible"
+            android:id="@+id/profilePictureContainer">
+
+            <ImageView
+                android:id="@+id/profileImageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                android:contentDescription="Profile Photo"
+                android:background="@android:color/transparent"/>
+
+            <Button
+                android:layout_width="128dp"
+                android:layout_height="28dp"
+                android:text="EDIT PROFILE PHOTO"
+                android:padding="6dp"
+                android:textSize="10sp"
+                android:layout_gravity="center"
+                android:background="@drawable/btn_transparent"
+                style="?android:attr/borderlessButtonStyle"
+                android:textColor="#ffffff"/>
+
+        </FrameLayout>
     </LinearLayout>
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/input_box"
         android:layout_width="match_parent"
         android:layout_height="460dp"
@@ -90,7 +120,7 @@
             android:layout_marginBottom="20dp"
             />
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/fullNameInputLayout"
             android:layout_width="250dp"
             android:layout_height="25dp"
@@ -99,15 +129,15 @@
             app:layout_constraintTop_toTopOf="@id/input_box"
             >
 
-            <android.support.design.widget.TextInputEditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/fullNameEditText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
                 android:hint="@string/default_fullname"
                 android:textCursorDrawable="@android:color/transparent"
-                android:textDirection="rtl" />
-        </android.support.design.widget.TextInputLayout>
+                android:gravity="end" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <View
             android:id="@+id/firstDiv"
@@ -130,7 +160,7 @@
             app:layout_constraintTop_toBottomOf="@id/firstDiv"
             android:layout_marginTop="14dp"/>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/emailInputLayout"
             android:layout_width="250dp"
             android:layout_height="25dp"
@@ -139,7 +169,7 @@
             app:layout_constraintTop_toBottomOf="@id/firstDiv"
             android:layout_marginTop="14dp">
 
-            <android.support.design.widget.TextInputEditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/emailEditText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -147,8 +177,8 @@
                 android:hint="@string/email_hint"
                 android:inputType="textEmailAddress"
                 android:textCursorDrawable="@android:color/transparent"
-                android:textDirection="rtl" />
-        </android.support.design.widget.TextInputLayout>
+                android:gravity="right" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <View
             android:id="@+id/beforePasswordDiv"
@@ -171,7 +201,7 @@
             app:layout_constraintTop_toBottomOf="@id/beforePasswordDiv"
             android:layout_marginTop="14dp"/>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/passwordInputLayout"
             android:layout_width="250dp"
             android:layout_height="25dp"
@@ -180,7 +210,7 @@
             app:layout_constraintTop_toBottomOf="@id/beforePasswordDiv"
             android:layout_marginTop="14dp">
 
-            <android.support.design.widget.TextInputEditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passwordEditText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -190,7 +220,7 @@
                 android:gravity="end"
                 android:textCursorDrawable="@android:color/transparent"
                 android:textDirection="rtl" />
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <View
             android:id="@+id/afterPasswordDiv"
@@ -214,7 +244,7 @@
             app:layout_constraintTop_toBottomOf="@id/afterPasswordDiv"
             android:layout_marginTop="14dp"/>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/phoneNumberInputLayout"
             android:layout_width="250dp"
             android:layout_height="25dp"
@@ -223,7 +253,7 @@
             app:layout_constraintTop_toBottomOf="@id/afterPasswordDiv"
             android:layout_marginTop="14dp">
 
-            <android.support.design.widget.TextInputEditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/phoneEditText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -232,7 +262,7 @@
                 android:inputType="phone"
                 android:textCursorDrawable="@android:color/transparent"
                 android:gravity="right" />
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <View
             android:id="@+id/thirdDiv"
@@ -255,7 +285,7 @@
             app:layout_constraintTop_toBottomOf="@id/thirdDiv"
             android:layout_marginTop="14dp"/>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/roleInputLayout"
             android:layout_width="250dp"
             android:layout_height="25dp"
@@ -264,7 +294,7 @@
             app:layout_constraintTop_toBottomOf="@id/thirdDiv"
             android:layout_marginTop="14dp">
 
-            <android.support.design.widget.TextInputEditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/roleEditText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -273,7 +303,7 @@
                 android:inputType="text"
                 android:textCursorDrawable="@android:color/transparent"
                 android:gravity="end" />
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <View
             android:id="@+id/fourthDiv"
@@ -296,7 +326,7 @@
             app:layout_constraintTop_toBottomOf="@id/fourthDiv"
             android:layout_marginTop="14dp"/>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/twitterInputLayout"
             android:layout_width="250dp"
             android:layout_height="25dp"
@@ -305,7 +335,7 @@
             app:layout_constraintTop_toBottomOf="@id/fourthDiv"
             android:layout_marginTop="14dp">
 
-            <android.support.design.widget.TextInputEditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/twitterEditText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -314,7 +344,7 @@
                 android:inputType="text"
                 android:textCursorDrawable="@android:color/transparent"
                 android:gravity="end" />
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <View
             android:id="@+id/fifthDiv"
@@ -337,7 +367,7 @@
             app:layout_constraintTop_toBottomOf="@id/fifthDiv"
             android:layout_marginTop="14dp"/>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/linkedInInputLayout"
             android:layout_width="250dp"
             android:layout_height="25dp"
@@ -346,8 +376,8 @@
             app:layout_constraintTop_toBottomOf="@id/fifthDiv"
             android:layout_marginTop="14dp">
 
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/LinkedInEditText"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/linkedInEditText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
@@ -355,7 +385,7 @@
                 android:inputType="text"
                 android:textCursorDrawable="@android:color/transparent"
                 android:gravity="end" />
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <View
             android:id="@+id/sixthDiv"
@@ -379,6 +409,6 @@
             android:background="@drawable/btn_rounded"
             android:layout_marginTop="20dp"/>
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
