@@ -34,9 +34,10 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_user_tb"
             style="?borderlessButtonStyle"
+            android:onClick="openProfilePage"
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
-            android:contentDescription="Back"
+            android:contentDescription="Profile Icon"
             android:layout_marginStart="10dp" />
     </LinearLayout>
 

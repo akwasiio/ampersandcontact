@@ -24,6 +24,8 @@ import kotlinx.android.synthetic.main.activity_home_qr.*
 
 class HomeQRActivity : AppCompatActivity() {
 
+    var user: User? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_qr)
@@ -32,23 +34,29 @@ class HomeQRActivity : AppCompatActivity() {
             requestCameraPermission()
 
         val receivedIntent = intent
-        val user = receivedIntent.getSerializableExtra("user") as User
-        val barcodeBitmap = generateQR(user.id)
+        user = receivedIntent.getSerializableExtra("user") as User
+        val barcodeBitmap = generateQR(user!!.id)
         barcodeView.setImageBitmap(barcodeBitmap)
 
         userFullNameTextView.text =
-            user.firstName.replaceFirst(user.firstName[0], user.firstName[0].toUpperCase())
+            user!!.firstName.replaceFirst(user!!.firstName[0], user!!.firstName[0].toUpperCase())
                 .plus(
                     " ".plus(
-                        user.lastName.replaceFirst(
-                            user.lastName[0],
-                            user.lastName[0].toUpperCase()
+                        user!!.lastName.replaceFirst(
+                            user!!.lastName[0],
+                            user!!.lastName[0].toUpperCase()
                         )
                     )
                 )
-        userRoleTextView.text = user.role
+        userRoleTextView.text = user!!.role
 
-        Picasso.with(this).load(user.photo).fit().centerCrop().placeholder(R.drawable.ic_user_tb).into(circle_profile_image)
+        Picasso.with(this).load(user!!.photo).fit().centerCrop().placeholder(R.drawable.ic_user_tb).into(circle_profile_image)
+    }
+
+    fun openProfilePage(view: View){
+        val intent = Intent(this, ProfileActivity::class.java)
+        intent.putExtra("user", user)
+        startActivity(intent)
     }
 
     private fun generateQR(content: String): Bitmap {

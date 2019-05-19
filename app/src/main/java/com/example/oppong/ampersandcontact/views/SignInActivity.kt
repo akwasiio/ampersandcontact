@@ -31,7 +31,7 @@ class SignInActivity : AppCompatActivity(), AuthenticationContract.View {
 
     override fun showMessage(message: String) {
         when (message) {
-            "Error occurred" -> loginErrorText.visibility = View.VISIBLE
+            "Not Found" -> loginErrorText.visibility = View.VISIBLE
             "Service Unavailable" -> Toast.makeText(
                 this,
                 "Error connecting to server. Try again in a few moments.",

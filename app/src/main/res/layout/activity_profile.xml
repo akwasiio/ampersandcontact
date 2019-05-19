@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.ProfileActivity">
+
+    <LinearLayout
+        android:id="@+id/registerBar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/colorPrimary"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
+
+        <ImageButton
+            style="?borderlessButtonStyle"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:contentDescription="Back"
+            android:src="@drawable/ic_arrow_back_black_45dp" />
+
+        <TextView
+            android:id="@+id/profileHeaderText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="120dp"
+            android:layout_marginLeft="115dp"
+            android:text="My Profile"
+            android:textColor="#ffffff"
+            android:textSize="17sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/profileImageContainer"
+        android:paddingLeft="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="60dp"
+        android:orientation="horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/registerBar"
+        android:paddingStart="20dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profileImageCircleView"
+            android:layout_width="55dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            app:civ_border_color="#FF000000"
+            app:civ_border_width="2dp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/profileFullNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/brownpro"
+                android:textColor="#4a4a4a"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/profileRoleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/brownpro"
+                android:textColor="#9b9b9b"
+                android:textSize="18sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/socialMediaContainer"
+        app:layout_constraintTop_toBottomOf="@id/profileImageContainer"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_width="wrap_content"
+        android:paddingLeft="20dp"
+        android:layout_height="wrap_content"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingStart="20dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_twitter"/>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="30dp"
+            android:layout_marginLeft="14dp"
+            android:layout_height="30dp"
+            android:src="@mipmap/ic_linkedin_round"
+            />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/callIcon"
+        app:layout_constraintTop_toBottomOf="@id/socialMediaContainer"
+        android:layout_width="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="25dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_call"
+        android:contentDescription="Phone Icon"
+        android:layout_marginStart="25dp" />
+
+    <TextView
+        android:id="@+id/profileTelephone"
+        app:layout_constraintLeft_toRightOf="@id/callIcon"
+        app:layout_constraintTop_toBottomOf="@id/socialMediaContainer"
+        android:layout_marginTop="35dp"
+        android:textSize="18sp"
+        android:fontFamily="@font/brownpro"
+        android:layout_marginLeft="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp" />
+
+    <ImageView
+        android:id="@+id/mailIcon"
+        app:layout_constraintTop_toBottomOf="@id/callIcon"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/ic_mail"
+        android:layout_marginLeft="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp" />
+
+    <TextView
+        android:id="@+id/profileMail"
+        app:layout_constraintTop_toBottomOf="@id/profileTelephone"
+        app:layout_constraintLeft_toRightOf="@id/mailIcon"
+        android:fontFamily="@font/brownpro"
+        android:textSize="18sp"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp" />
+
+    <ImageView
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mailIcon"
+        android:src="@drawable/ic_location"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="30dp"
+        android:id="@+id/locationIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:contentDescription="Location Icon" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/profileLocation"
+        app:layout_constraintTop_toBottomOf="@id/profileMail"
+        app:layout_constraintLeft_toRightOf="@id/locationIcon"
+        android:layout_marginTop="27dp"
+        android:layout_marginLeft="25dp"
+        android:text="Shoreditch, UK"
+        android:textSize="18sp"
+        android:fontFamily="@font/brownpro"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>
