@@ -30,33 +30,39 @@ class SignInActivity : AppCompatActivity(), AuthenticationContract.View {
 
 
     override fun showMessage(message: String) {
-        if (message == "Error occurred")
-            loginErrorText.visibility = View.VISIBLE
-        else {
-            hideProgressDialog()
-            val alertDialogBuilder = AlertDialog.Builder(
-                ContextThemeWrapper(
-                    this,
-                    android.R.style.Theme_DeviceDefault_Light_Dialog
-                )
-            )
-            alertDialogBuilder.setTitle("Login Error")
-            alertDialogBuilder.setMessage("An error occurred during your login.\nPlease try again in a few moments.")
-            alertDialogBuilder.setNegativeButton("Cancel") { context, _ ->
-                context.dismiss()
-            }
-            alertDialogBuilder.setPositiveButton("Try Again") { context, _ ->
-                run {
-                    hideProgressDialog()
-                    presenter = SignInViewPresenter(
+        when (message) {
+            "Error occurred" -> loginErrorText.visibility = View.VISIBLE
+            "Service Unavailable" -> Toast.makeText(
+                this,
+                "Error connecting to server. Try again in a few moments.",
+                Toast.LENGTH_LONG
+            ).show()
+            else -> {
+                hideProgressDialog()
+                val alertDialogBuilder = AlertDialog.Builder(
+                    ContextThemeWrapper(
                         this,
-                        loginEmailEditText.text.toString(),
-                        loginPasswordEditText.text.toString()
+                        android.R.style.Theme_DeviceDefault_Light_Dialog
                     )
+                )
+                alertDialogBuilder.setTitle("Login Error")
+                alertDialogBuilder.setMessage("An error occurred during your login.\nPlease try again in a few moments.")
+                alertDialogBuilder.setNegativeButton("Cancel") { context, _ ->
+                    context.dismiss()
                 }
+                alertDialogBuilder.setPositiveButton("Try Again") { context, _ ->
+                    run {
+                        hideProgressDialog()
+                        presenter = SignInViewPresenter(
+                            this,
+                            loginEmailEditText.text.toString(),
+                            loginPasswordEditText.text.toString()
+                        )
+                    }
+                }
+                alertDialogBuilder.setCancelable(false)
+                alertDialogBuilder.create().show()
             }
-            alertDialogBuilder.setCancelable(false)
-            alertDialogBuilder.create().show()
         }
     }
 

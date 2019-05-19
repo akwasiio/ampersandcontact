@@ -24,7 +24,7 @@ class SignInViewPresenter(view: AuthenticationContract.View, email: String, pass
 
     override fun onError(response: Response<UserAuthResponse>) {
         mView.hideProgressDialog()
-        mView.showMessage("Error occurred")
+        mView.showMessage(response.message())
     }
 
     override fun onFailure(t: Throwable) {

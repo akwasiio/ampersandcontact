@@ -48,7 +48,7 @@ class HomeQRActivity : AppCompatActivity() {
                 )
         userRoleTextView.text = user.role
 
-        Picasso.with(this).load(user.photo).fit().centerCrop().into(circle_profile_image)
+        Picasso.with(this).load(user.photo).fit().centerCrop().placeholder(R.drawable.ic_user_tb).into(circle_profile_image)
     }
 
     private fun generateQR(content: String): Bitmap {
