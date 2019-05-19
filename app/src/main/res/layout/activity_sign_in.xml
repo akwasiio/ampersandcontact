@@ -61,11 +61,12 @@
         android:textColor="#af4830"
         android:fontFamily="@font/brownpro"
         android:visibility="invisible"
-        android:textSize="14sp"
-        android:text="Email or Password is incorrect, check and try again."
+        android:textSize="15sp"
+        android:text="@string/loginErrorMessage"
         app:layout_constraintTop_toBottomOf="@id/imageContainer"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/loginFieldBox"

@@ -2,8 +2,10 @@ package com.example.oppong.ampersandcontact.views
 
 import androidx.appcompat.app.AppCompatActivity
 import android.Manifest
+import android.annotation.TargetApi
 import android.app.Activity
 import android.app.AlertDialog
+import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -17,21 +19,28 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Base64
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.core.content.FileProvider
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProviders
-import com.example.oppong.ampersandcontact.HomeQRActivity
 import com.example.oppong.ampersandcontact.R
-import com.example.oppong.ampersandcontact.viewmodels.AuthViewModel
+import com.example.oppong.ampersandcontact.contracts.AuthenticationContract
+import com.example.oppong.ampersandcontact.model.User
+import com.example.oppong.ampersandcontact.model.UserAuthResponse
+import com.example.oppong.ampersandcontact.presenters.RegistrationViewPresenter
+import com.example.oppong.ampersandcontact.rest.ApiClient
+import com.example.oppong.ampersandcontact.rest.WebService
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import kotlinx.android.synthetic.main.activity_register.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -39,17 +48,58 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
+class RegisterActivity : AppCompatActivity(), AuthenticationContract.View {
+    private lateinit var progressDialog: ProgressDialog
+    private var presenter: RegistrationViewPresenter? = null
 
-class RegisterActivity : AppCompatActivity() {
+    lateinit var perfectBitmap: Bitmap
 
-
-    private val viewModel: AuthViewModel by lazy {
-        ViewModelProviders.of(this).get(AuthViewModel::class.java)
+    override fun showMessage(message: String) {
+         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
+
+    override fun showProgressDialog() {
+        if (progressDialog.isShowing) {
+            progressDialog.setMessage("Signing up. Please wait...")
+        } else {
+            progressDialog.isIndeterminate = true
+            progressDialog.setMessage("Signing up. Please wait...")
+            progressDialog.setCancelable(false)
+
+            try {
+                progressDialog.show()
+            } catch (ex: Exception) {
+                ex.printStackTrace()
+            }
+        }
+    }
+
+    override fun hideProgressDialog() {
+        try {
+            if (progressDialog.isShowing) {
+                progressDialog.dismiss()
+                progressDialog.hide()
+            }
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    override fun nextActivity(user: User) {
+        val intent = Intent(applicationContext, HomeQRActivity::class.java)
+        intent.putExtra("user", user)
+        finishAffinity()
+        finish()
+        startActivity(intent)
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
+
+        progressDialog = ProgressDialog(this)
     }
 
     val CAMERA = 1
@@ -59,14 +109,15 @@ class RegisterActivity : AppCompatActivity() {
         val IMAGE_DIRECTORY = "/ampersand"
     }
 
-
+    @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
     fun onRegisterButtonClick(view: View) {
         if (areInputsValid()) {
             val fullNameSplit = fullNameEditText.text!!.split(" ")
             val firstName = fullNameSplit[0]
             val lastName = fullNameSplit[1]
 
-            val (message, userObject) = viewModel.registerUser(
+            presenter =  RegistrationViewPresenter(
+                this,
                 mFirstName = firstName,
                 mLastName = lastName,
                 mEmail = emailEditText.text.toString(),
@@ -77,22 +128,7 @@ class RegisterActivity : AppCompatActivity() {
                 mLinkedIn = linkedInEditText.text.toString(),
                 mPhoto = encodeImageFileToBase64(perfectBitmap)
             )
-
-            when (message) {
-                "registration successful" -> {
-                    val intent = Intent(this, HomeQRActivity::class.java)
-                    intent.putExtra("user", userObject)
-                    startActivity(intent)
-                }
-                "network error" -> Toast.makeText(
-                    this,
-                    "Network error. Check your internet connection and try again.",
-                    Toast.LENGTH_LONG
-                ).show()
-                "email exists" -> Toast.makeText(this, "Email already exists. Go to login page.", Toast.LENGTH_LONG).show()
-            }
-
-        } else Toast.makeText(this, "Invalid inputs", Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun areInputsValid(): Boolean {
@@ -134,20 +170,20 @@ class RegisterActivity : AppCompatActivity() {
         val chooserDialogItems = arrayOf("Select a photo from gallery", "Capture photo from camera")
         chooserDialog.setItems(chooserDialogItems) { _, which ->
             when (which) {
-                0 -> chooseImageFromGallery()
-                1 -> takeImageFromCamera()
+                0 -> chooseImageFromGalleryIntent()
+                1 -> takeImageFromCameraIntent()
             }
         }
         chooserDialog.show()
     }
 
-    private fun chooseImageFromGallery() {
+    private fun chooseImageFromGalleryIntent() {
         val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         startActivityForResult(galleryIntent, GALLERY)
     }
 
     lateinit var photoURI: Uri
-    private fun takeImageFromCamera() {
+    private fun takeImageFromCameraIntent() {
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             takePictureIntent.resolveActivity(packageManager)?.also {
                 val photoFile: File? = try {
@@ -169,7 +205,6 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    lateinit var perfectBitmap: Bitmap
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -319,4 +354,5 @@ class RegisterActivity : AppCompatActivity() {
                 ).show()
             }.onSameThread().check()
     }
+
 }

@@ -12,7 +12,7 @@
         app:layout_constraintLeft_toLeftOf="@id/rootLayout"
         app:layout_constraintRight_toRightOf="@id/rootLayout"
         android:layout_width="match_parent"
-        android:id="@+id/image"
+        android:id="@+id/imageContainer"
         android:layout_height="365dp">
         <ImageView
             android:contentDescription="Walkthrough image"
@@ -23,7 +23,7 @@
     </LinearLayout>
     <LinearLayout
         android:id="@+id/mainContainer"
-        app:layout_constraintTop_toBottomOf="@id/image"
+        app:layout_constraintTop_toBottomOf="@id/imageContainer"
         android:paddingTop="24dp"
         android:paddingLeft="20dp"
         android:paddingRight="8dp"
