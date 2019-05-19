@@ -6,8 +6,10 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Patterns
+import android.view.ContextThemeWrapper
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.oppong.ampersandcontact.R
 import com.example.oppong.ampersandcontact.contracts.AuthenticationContract
@@ -28,8 +30,34 @@ class SignInActivity : AppCompatActivity(), AuthenticationContract.View {
 
 
     override fun showMessage(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
-        loginErrorText.visibility = View.VISIBLE
+        if (message == "Error occurred")
+            loginErrorText.visibility = View.VISIBLE
+        else {
+            hideProgressDialog()
+            val alertDialogBuilder = AlertDialog.Builder(
+                ContextThemeWrapper(
+                    this,
+                    android.R.style.Theme_DeviceDefault_Light_Dialog
+                )
+            )
+            alertDialogBuilder.setTitle("Login Error")
+            alertDialogBuilder.setMessage("An error occurred during your login.\nPlease try again in a few moments.")
+            alertDialogBuilder.setNegativeButton("Cancel") { context, _ ->
+                context.dismiss()
+            }
+            alertDialogBuilder.setPositiveButton("Try Again") { context, _ ->
+                run {
+                    hideProgressDialog()
+                    presenter = SignInViewPresenter(
+                        this,
+                        loginEmailEditText.text.toString(),
+                        loginPasswordEditText.text.toString()
+                    )
+                }
+            }
+            alertDialogBuilder.setCancelable(false)
+            alertDialogBuilder.create().show()
+        }
     }
 
     override fun showProgressDialog() {

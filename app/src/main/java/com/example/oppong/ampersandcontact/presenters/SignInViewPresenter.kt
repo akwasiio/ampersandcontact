@@ -29,7 +29,7 @@ class SignInViewPresenter(view: AuthenticationContract.View, email: String, pass
 
     override fun onFailure(t: Throwable) {
         mView.hideProgressDialog()
-        mView.showMessage(t.message!!)
+        mView.showMessage("Network Error")
     }
 
     private val userModel: AuthenticationContract.Model = UserLoginModel()
