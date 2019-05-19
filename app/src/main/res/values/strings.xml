@@ -24,5 +24,8 @@
     <string name="keep_in_touch_label">KEEP IN TOUCH WITH THE PEOPLE OF AMPERSAND</string>
     <string name="sign_in_prompt">Sign in or register with your Ampersand email</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 
 </resources>

@@ -4,9 +4,9 @@ import com.example.oppong.ampersandcontact.model.User
 import com.example.oppong.ampersandcontact.model.UserAuthResponse
 import retrofit2.Response
 
-interface SignInContract {
+interface AuthenticationContract {
     interface Model{
-        fun loginUser(user: User, listener: LoginApiListener)
+        fun authenticateUser(user: User, listener: AuthenticationApiListener)
     }
 
     interface View{
@@ -18,10 +18,10 @@ interface SignInContract {
     }
 
     interface Presenter{
-        fun loginUser(user: User)
+        fun authenticateUser(user: User)
     }
 
-    interface LoginApiListener{
+    interface AuthenticationApiListener{
         fun onSuccess(response: Response<UserAuthResponse>)
         fun onError(response: Response<UserAuthResponse>)
         fun onFailure(t: Throwable)

@@ -2,13 +2,13 @@ package com.example.oppong.ampersandcontact.model
 
 import com.example.oppong.ampersandcontact.rest.ApiClient
 import com.example.oppong.ampersandcontact.rest.WebService
-import com.example.oppong.ampersandcontact.contracts.SignInContract
+import com.example.oppong.ampersandcontact.contracts.AuthenticationContract
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class UserModel : SignInContract.Model {
-    override fun loginUser(user: User, listener: SignInContract.LoginApiListener) {
+class UserLoginModel : AuthenticationContract.Model {
+    override fun authenticateUser(user: User, listener: AuthenticationContract.AuthenticationApiListener) {
         val webService = ApiClient.getClient()?.create(WebService::class.java)
         val call = webService?.login(user)
         call?.enqueue(object : Callback<UserAuthResponse>{

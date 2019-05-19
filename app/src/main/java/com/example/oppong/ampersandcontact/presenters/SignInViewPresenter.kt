@@ -1,18 +1,18 @@
 package com.example.oppong.ampersandcontact.presenters
 
 import android.util.Log
-import com.example.oppong.ampersandcontact.contracts.SignInContract
+import com.example.oppong.ampersandcontact.contracts.AuthenticationContract
 import com.example.oppong.ampersandcontact.model.User
 import com.example.oppong.ampersandcontact.model.UserAuthResponse
-import com.example.oppong.ampersandcontact.model.UserModel
+import com.example.oppong.ampersandcontact.model.UserLoginModel
 import retrofit2.Response
 
-class SignInViewPresenter(view: SignInContract.View, email: String, password: String) : SignInContract.Presenter, SignInContract.LoginApiListener{
+class SignInViewPresenter(view: AuthenticationContract.View, email: String, password: String) : AuthenticationContract.Presenter, AuthenticationContract.AuthenticationApiListener{
     private val user = User(email = email, password = password)
 
-    override fun loginUser(user: User) {
+    override fun authenticateUser(user: User) {
         mView.showProgressDialog()
-        userModel.loginUser(user, this)
+        userModel.authenticateUser(user, this)
 
     }
 
@@ -32,9 +32,9 @@ class SignInViewPresenter(view: SignInContract.View, email: String, password: St
         mView.showMessage(t.message!!)
     }
 
-    private val userModel: SignInContract.Model = UserModel()
+    private val userModel: AuthenticationContract.Model = UserLoginModel()
     private val mView = view
     init {
-        loginUser(user)
+        authenticateUser(user)
     }
 }

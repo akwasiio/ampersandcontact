@@ -1,19 +1,21 @@
 package com.example.oppong.ampersandcontact.views
 
+import android.annotation.TargetApi
 import android.app.ProgressDialog
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.oppong.ampersandcontact.R
-import com.example.oppong.ampersandcontact.contracts.SignInContract
+import com.example.oppong.ampersandcontact.contracts.AuthenticationContract
 import com.example.oppong.ampersandcontact.model.User
 import com.example.oppong.ampersandcontact.presenters.SignInViewPresenter
 import kotlinx.android.synthetic.main.activity_sign_in.*
 
-class SignInActivity : AppCompatActivity(), SignInContract.View {
+class SignInActivity : AppCompatActivity(), AuthenticationContract.View {
     private lateinit var progressDialog: ProgressDialog
     private var presenter: SignInViewPresenter? = null
 
@@ -27,6 +29,7 @@ class SignInActivity : AppCompatActivity(), SignInContract.View {
 
     override fun showMessage(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+        loginErrorText.visibility = View.VISIBLE
     }
 
     override fun showProgressDialog() {
@@ -56,9 +59,11 @@ class SignInActivity : AppCompatActivity(), SignInContract.View {
         }
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     override fun nextActivity(user: User) {
         val intent = Intent(applicationContext, HomeQRActivity::class.java)
         intent.putExtra("user", user)
+        finishAffinity()
         finish()
         startActivity(intent)
     }
