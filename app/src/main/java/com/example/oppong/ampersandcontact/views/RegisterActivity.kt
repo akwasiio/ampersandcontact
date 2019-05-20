@@ -19,28 +19,22 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Base64
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.core.content.FileProvider
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
 import com.example.oppong.ampersandcontact.R
+import com.example.oppong.ampersandcontact.Utility
 import com.example.oppong.ampersandcontact.contracts.AuthenticationContract
 import com.example.oppong.ampersandcontact.model.User
-import com.example.oppong.ampersandcontact.model.UserAuthResponse
 import com.example.oppong.ampersandcontact.presenters.RegistrationViewPresenter
-import com.example.oppong.ampersandcontact.rest.ApiClient
-import com.example.oppong.ampersandcontact.rest.WebService
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import kotlinx.android.synthetic.main.activity_register.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -54,8 +48,21 @@ class RegisterActivity : AppCompatActivity(), AuthenticationContract.View {
 
     lateinit var perfectBitmap: Bitmap
 
+    val CAMERA = 1
+    val GALLERY = 0
+
+    fun onBackButtonPressed(view: View) = finish()
+
     override fun showMessage(message: String) {
-         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+        if (message == "Forbidden") {
+            Toast.makeText(this, "Email already exists. Please sign in", Toast.LENGTH_LONG).show()
+        } else {
+            Toast.makeText(
+                this,
+                "Error occurred while connecting to server. Try again in a few moments",
+                Toast.LENGTH_LONG
+            ).show()
+        }
     }
 
     override fun showProgressDialog() {
@@ -88,12 +95,12 @@ class RegisterActivity : AppCompatActivity(), AuthenticationContract.View {
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     override fun nextActivity(user: User) {
         val intent = Intent(applicationContext, HomeQRActivity::class.java)
-        intent.putExtra("user", user)
+//        intent.putExtra("user", user)
+        Utility.addSharedPrefs(user, this)
         finishAffinity()
         finish()
         startActivity(intent)
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -102,12 +109,11 @@ class RegisterActivity : AppCompatActivity(), AuthenticationContract.View {
         progressDialog = ProgressDialog(this)
     }
 
-    val CAMERA = 1
-    val GALLERY = 0
 
     companion object {
         val IMAGE_DIRECTORY = "/ampersand"
     }
+
 
     @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
     fun onRegisterButtonClick(view: View) {
@@ -116,7 +122,7 @@ class RegisterActivity : AppCompatActivity(), AuthenticationContract.View {
             val firstName = fullNameSplit[0]
             val lastName = fullNameSplit[1]
 
-            presenter =  RegistrationViewPresenter(
+            presenter = RegistrationViewPresenter(
                 this,
                 mFirstName = firstName,
                 mLastName = lastName,
@@ -130,6 +136,7 @@ class RegisterActivity : AppCompatActivity(), AuthenticationContract.View {
             )
         }
     }
+
 
     private fun areInputsValid(): Boolean {
         var valid = true
@@ -158,8 +165,14 @@ class RegisterActivity : AppCompatActivity(), AuthenticationContract.View {
             twitterEditText.error = "Twitter handle must begin with @"
         }
 
+        if (roleEditText.text.isNullOrBlank()) {
+            valid = false
+            roleEditText.error = "This field cannot be blank"
+        }
+
         return valid
     }
+
 
     fun showChooserDialog(view: View) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
@@ -230,8 +243,7 @@ class RegisterActivity : AppCompatActivity(), AuthenticationContract.View {
         }
     }
 
-    fun setPic() {
-
+    private fun setPic() {
         val bitmap = BitmapFactory.decodeFile(currentPhotoPath)
         perfectBitmap = checkIfRotationIsRequired(bitmap)
         profileImageView.setImageBitmap(perfectBitmap)
@@ -253,7 +265,6 @@ class RegisterActivity : AppCompatActivity(), AuthenticationContract.View {
         if (!profilePictureDir.exists()) {
             profilePictureDir.mkdirs()
         }
-
         try {
             val f =
                 File(profilePictureDir, ((Calendar.getInstance().timeInMillis.toString() + ".jpg")))

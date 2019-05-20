@@ -17,6 +17,7 @@
         <ImageButton
             android:layout_width="45dp"
             android:layout_height="45dp"
+            android:onClick="onBackButtonPressed"
             android:src="@drawable/ic_arrow_back_black_45dp"
             style="?borderlessButtonStyle"
             android:layout_gravity="center"
@@ -86,6 +87,7 @@
                 android:text="EDIT PROFILE PHOTO"
                 android:padding="6dp"
                 android:textSize="10sp"
+                android:onClick="showChooserDialog"
                 android:layout_gravity="center"
                 android:background="@drawable/btn_transparent"
                 style="?android:attr/borderlessButtonStyle"
