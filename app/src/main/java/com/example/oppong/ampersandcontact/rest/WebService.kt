@@ -1,18 +1,18 @@
 package com.example.oppong.ampersandcontact.rest
 
 import com.example.oppong.ampersandcontact.model.User
-import com.example.oppong.ampersandcontact.model.UserAuthResponse
+import com.example.oppong.ampersandcontact.model.UserResponse
 import retrofit2.Call
 import retrofit2.http.*
 
 interface WebService {
     @Headers("Content-Type: application/json")
     @POST("register")
-    fun register(@Body user: User): Call<UserAuthResponse>
+    fun register(@Body user: User): Call<UserResponse>
 
     @Headers("Content-Type: application/json")
     @POST("login")
-    fun login(@Body user: User): Call<UserAuthResponse>
+    fun login(@Body user: User): Call<UserResponse>
 
     @Headers(
         value = ["Content-type: application/json",
@@ -20,5 +20,5 @@ interface WebService {
                     "RhMTZhNjUiLCJpYXQiOjE1NTIyOTQ4ODd9.eMXlcE4e_5N2fSxrQaeYJyGCzBnhL_BeenaroWsaZ9s"]
     )
     @GET("profile/{id}")
-    fun getUserProfile(@Path("id") id: String)
+    fun getUserProfile(@Path("id") id: String) : Call<UserResponse>
 }

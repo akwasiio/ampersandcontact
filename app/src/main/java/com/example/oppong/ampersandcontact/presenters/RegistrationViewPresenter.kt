@@ -2,8 +2,7 @@ package com.example.oppong.ampersandcontact.presenters
 
 import com.example.oppong.ampersandcontact.contracts.AuthenticationContract
 import com.example.oppong.ampersandcontact.model.User
-import com.example.oppong.ampersandcontact.model.UserAuthResponse
-import com.example.oppong.ampersandcontact.model.UserLoginModel
+import com.example.oppong.ampersandcontact.model.UserResponse
 import com.example.oppong.ampersandcontact.model.UserRegistrationModel
 import retrofit2.Response
 
@@ -34,14 +33,14 @@ class RegistrationViewPresenter(
         userModel.authenticateUser(user, this)
     }
 
-    override fun onSuccess(response: Response<UserAuthResponse>) {
+    override fun onSuccess(response: Response<UserResponse>) {
         view.hideProgressDialog()
         view.nextActivity(response.body()!!.user)
     }
 
-    override fun onError(response: Response<UserAuthResponse>) {
+    override fun onError(response: Response<UserResponse>) {
         view.hideProgressDialog()
-        view.showMessage("Error occurred. Try again.")
+        view.showMessage(response.message())
     }
 
     override fun onFailure(t: Throwable) {

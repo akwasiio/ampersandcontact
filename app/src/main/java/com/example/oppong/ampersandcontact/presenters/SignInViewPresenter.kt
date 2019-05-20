@@ -3,7 +3,7 @@ package com.example.oppong.ampersandcontact.presenters
 import android.util.Log
 import com.example.oppong.ampersandcontact.contracts.AuthenticationContract
 import com.example.oppong.ampersandcontact.model.User
-import com.example.oppong.ampersandcontact.model.UserAuthResponse
+import com.example.oppong.ampersandcontact.model.UserResponse
 import com.example.oppong.ampersandcontact.model.UserLoginModel
 import retrofit2.Response
 
@@ -16,13 +16,13 @@ class SignInViewPresenter(view: AuthenticationContract.View, email: String, pass
 
     }
 
-    override fun onSuccess(response: Response<UserAuthResponse>) {
+    override fun onSuccess(response: Response<UserResponse>) {
         Log.d("mvpSuccess:::", response.body()?.user.toString())
         mView.hideProgressDialog()
         mView.nextActivity(response.body()!!.user)
     }
 
-    override fun onError(response: Response<UserAuthResponse>) {
+    override fun onError(response: Response<UserResponse>) {
         mView.hideProgressDialog()
         mView.showMessage(response.message())
     }

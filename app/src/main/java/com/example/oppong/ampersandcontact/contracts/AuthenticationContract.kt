@@ -1,7 +1,7 @@
 package com.example.oppong.ampersandcontact.contracts
 
 import com.example.oppong.ampersandcontact.model.User
-import com.example.oppong.ampersandcontact.model.UserAuthResponse
+import com.example.oppong.ampersandcontact.model.UserResponse
 import retrofit2.Response
 
 interface AuthenticationContract {
@@ -22,8 +22,8 @@ interface AuthenticationContract {
     }
 
     interface AuthenticationApiListener{
-        fun onSuccess(response: Response<UserAuthResponse>)
-        fun onError(response: Response<UserAuthResponse>)
+        fun onSuccess(response: Response<UserResponse>)
+        fun onError(response: Response<UserResponse>)
         fun onFailure(t: Throwable)
     }
 }

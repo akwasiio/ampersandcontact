@@ -13,14 +13,14 @@ class UserLoginModel : AuthenticationContract.Model {
         val webService = ApiClient.getClient()?.create(WebService::class.java)
         val call = webService?.login(user)
 
-        call?.enqueue(object : Callback<UserAuthResponse>{
-            override fun onFailure(call: Call<UserAuthResponse>, t: Throwable) {
+        call?.enqueue(object : Callback<UserResponse>{
+            override fun onFailure(call: Call<UserResponse>, t: Throwable) {
                 listener.onFailure(t)
             }
 
             override fun onResponse(
-                call: Call<UserAuthResponse>,
-                response: Response<UserAuthResponse>
+                call: Call<UserResponse>,
+                response: Response<UserResponse>
             ) {
                 if(response.isSuccessful){
                     listener.onSuccess(response)
