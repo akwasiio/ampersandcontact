@@ -1,5 +1,6 @@
 package com.example.oppong.ampersandcontact.views
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Build
@@ -8,6 +9,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import com.example.oppong.ampersandcontact.R
+import com.example.oppong.ampersandcontact.Utility
 import com.example.oppong.ampersandcontact.model.User
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
@@ -33,29 +35,25 @@ class HomeQRActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
             requestCameraPermission()
 
-        val receivedIntent = intent
-        user = receivedIntent.getSerializableExtra("user") as User
-        val barcodeBitmap = generateQR(user!!.id)
+        val prefs = getSharedPreferences("user_details", Context.MODE_PRIVATE)
+        val firstName = prefs.getString("firstName", " ")
+        val lastName = prefs.getString("lastName", " ")
+        val photo = prefs.getString("photo", " ")
+        val userId = prefs.getString("user_id", " ")
+        val role = prefs.getString("role", " ")
+
+        val barcodeBitmap = generateQR(userId)
         barcodeView.setImageBitmap(barcodeBitmap)
 
-        userFullNameTextView.text =
-            user!!.firstName.replaceFirst(user!!.firstName[0], user!!.firstName[0].toUpperCase())
-                .plus(
-                    " ".plus(
-                        user!!.lastName.replaceFirst(
-                            user!!.lastName[0],
-                            user!!.lastName[0].toUpperCase()
-                        )
-                    )
-                )
-        userRoleTextView.text = user!!.role
+        userFullNameTextView.text = Utility.makeNameTitleCase(firstName.plus(" ".plus(lastName)))
+        userRoleTextView.text = role
 
-        Picasso.with(this).load(user!!.photo).fit().centerCrop().placeholder(R.drawable.ic_user_tb).into(circle_profile_image)
+        Picasso.with(this).load(photo).fit().centerCrop().placeholder(R.drawable.ic_user_tb).into(circle_profile_image)
     }
 
     fun openProfilePage(view: View){
         val intent = Intent(this, ProfileActivity::class.java)
-        intent.putExtra("user", user)
+//        intent.putExtra("user", user)
         startActivity(intent)
     }
 
