@@ -17,6 +17,7 @@
         tools:layout_editor_absoluteY="0dp">
         <ImageButton
             android:layout_width="45dp"
+            android:onClick="onBackButtonClickListener"
             android:layout_height="45dp"
             android:src="@drawable/ic_arrow_back_black_45dp"
             style="?borderlessButtonStyle"

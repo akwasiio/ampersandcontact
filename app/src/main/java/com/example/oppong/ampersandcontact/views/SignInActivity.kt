@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.oppong.ampersandcontact.R
+import com.example.oppong.ampersandcontact.Utility
 import com.example.oppong.ampersandcontact.contracts.AuthenticationContract
 import com.example.oppong.ampersandcontact.model.User
 import com.example.oppong.ampersandcontact.presenters.SignInViewPresenter
@@ -96,7 +97,8 @@ class SignInActivity : AppCompatActivity(), AuthenticationContract.View {
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     override fun nextActivity(user: User) {
         val intent = Intent(applicationContext, HomeQRActivity::class.java)
-        intent.putExtra("user", user)
+//        intent.putExtra("user", user)
+        Utility.addSharedPrefs(user, this)
         finishAffinity()
         finish()
         startActivity(intent)
@@ -130,5 +132,7 @@ class SignInActivity : AppCompatActivity(), AuthenticationContract.View {
 
         return valid
     }
+
+    fun onBackButtonClickListener(view: View) = finish()
 
 }
