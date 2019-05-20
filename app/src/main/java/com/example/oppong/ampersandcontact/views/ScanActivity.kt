@@ -16,6 +16,7 @@ import android.os.Handler
 
 import android.util.Log
 import android.view.SurfaceHolder
+import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.example.oppong.ampersandcontact.R
@@ -61,15 +62,21 @@ class ScanActivity : AppCompatActivity(), ScanActivityContract.View {
         }
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     override fun showMessage(message: String) {
         hideProgressDialog()
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+        finishAffinity()
+        finish()
+        startActivity(Intent(this, HomeQRActivity::class.java))
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     override fun openMemberProfile(user: User) {
         val intent = Intent(this, ProfileActivity::class.java)
         intent.putExtra("user", user)
         intent.putExtra("newHeaderText", "Member Profile")
+        finishAffinity()
         finish()
         startActivity(intent)
     }
@@ -94,7 +101,7 @@ class ScanActivity : AppCompatActivity(), ScanActivityContract.View {
 
         scannerPreview.holder.addCallback(object : SurfaceHolder.Callback {
             override fun surfaceChanged(holder: SurfaceHolder?, format: Int, width: Int, height: Int) {
-//                startCameraPreview(width, height)
+                startCameraPreview(width, height)
             }
 
             override fun surfaceDestroyed(holder: SurfaceHolder?) {
@@ -168,8 +175,8 @@ class ScanActivity : AppCompatActivity(), ScanActivityContract.View {
                             val barcodeResults = barcodeDetector.detect(frameToProcess)
 
                             if (barcodeResults.size() > 0) {
-                                Log.d("Barcode:::", barcodeResults.valueAt(0).displayValue)
-                                Toast.makeText(applicationContext, "Barcode detected!", Toast.LENGTH_SHORT).show()
+//                                Log.d("Barcode:::", barcodeResults.valueAt(0).displayValue)
+                                scanViewPresenter = ScanViewPresenter(this@ScanActivity, barcodeResults.valueAt(0)?.rawValue!!)
                             } else {
                                 Log.d("ERROR", "No barcode found")
                             }
@@ -230,7 +237,12 @@ class ScanActivity : AppCompatActivity(), ScanActivityContract.View {
             // TODO
             Log.e("ERROR", e.message)
         }
+
     }
 
+    fun onSendQRButtonPressed(view: View) {
+        finish()
+
+    }
 
 }

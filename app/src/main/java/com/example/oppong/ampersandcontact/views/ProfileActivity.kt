@@ -9,6 +9,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.oppong.ampersandcontact.R
 import com.example.oppong.ampersandcontact.Utility
+import com.example.oppong.ampersandcontact.model.User
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_profile.*
 
@@ -30,17 +31,39 @@ class ProfileActivity : AppCompatActivity() {
         val role = prefs.getString("role", " ")
 
         val extraString = receivedIntent.getStringExtra("newHeaderText")
-        if(extraString != null)
+
+        if (extraString != null) {
+            val user = receivedIntent.getSerializableExtra("user") as User
             profileHeaderText.text = extraString
+            setUpUI(
+                user.firstName.plus(" ").plus(user.lastName),
+                user.role,
+                user.photo,
+                user.email,
+                user.phoneNumber
+            )
+        } else {
+            setUpUI(firstName.plus(" ".plus(lastName)), role, photo, email, phoneNumber)
 
-        profileFullNameTextView.text = Utility.makeNameTitleCase(firstName.plus(" ".plus(lastName)))
+        }
+
+
+    }
+
+    private fun setUpUI(
+        fullName: String,
+        role: String,
+        photo: String,
+        mail: String,
+        phone: String
+    ) {
+        profileFullNameTextView.text = Utility.makeNameTitleCase(fullName)
         profileRoleTextView.text = role
-
         Picasso.with(this).load(photo).placeholder(R.drawable.ic_user).fit().centerCrop()
             .into(profileImageCircleView)
 
-        profileMail.text = email
-        profileTelephone.text = phoneNumber
+        profileMail.text = mail
+        profileTelephone.text = phone
 
     }
 
